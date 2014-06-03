@@ -39,7 +39,15 @@
         <h2>Did the company us funding to grow?</h2>
         <p>The company has taken {{ comp.$fundingRounds.rounds.length }} funding rounds.</p>
         <div id="fundingRounds">
+            <script type="text/ng-template" id="fundingRound.html" >
 
+            </script>
+
+            <div ng-repeat="myRound in comp.$fundingRounds.rounds">
+                <div class="fundingRound">
+                    <h3>Funding Round {{ myRound.number }}: ${{ myRound.valuation | number }} Pre-money valuation</h3>
+                </div>
+            </div>
         </div>
         <div>
             <fieldset>

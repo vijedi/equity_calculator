@@ -2,13 +2,19 @@ var app = angular.module('app', []);
 
 var initialSharePrice = .50;
 
-function FundingRound(amount, valuation) {
-	this.amount = amount;
-	this.valuation = valuation;
+function FundingRound() {
+	this.number = 0;
+	this.amount = '';
+	this.valuation = '';
 	this.preference = false;
 	this.preferenceAmount = 1;
 	this.participating = false;
-	this.particpiationStyle = 'bestOf';
+	this.participationStyle = 'bestOf';
+	this.preMoneyShares = 1;
+	this.sharesIssued = function() {
+		var pricePerShare = this.valuation / this.preMoneyShares;
+		return this.amount / pricePerShare; 
+	}
 };
 
 app.value('employeeCompensation', {
@@ -58,14 +64,16 @@ app.controller('CompanyController', ['companyValue', 'fundingRounds', function($
 	this.$compVal = $compVal;
 	this.$fundingRounds = $fundingRounds;
 
-	this.round = new FundingRound('', '');
+	this.round = new FundingRound();
 
 	var me = this;
 	this.addFundingRound = function(round) {
-		var currentPricePerShare = $compVal.pricePerShare;
-
-		me.$fundingRounds.rounds.push(round);
-		me.round = new FundingRound('', '');
+		round.number = me.$fundingRounds.rounds.length;
+		round.preMoneyShares = me.$compVal.sharesIssued;
+		
+		var myRound = angular.extend(new FundingRound(), round);
+		me.$fundingRounds.rounds.push(myRound);
+		me.round = angular.extend(me.round, new FundingRound());
 	};
 
 }]);
