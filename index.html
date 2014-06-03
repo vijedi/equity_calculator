@@ -38,7 +38,7 @@
         <fieldset>
             <label>Sale Price</label>
             <div>
-                $<input type="text" ng-model="$ngModelValue" ng-model-getter="ec.getExitValue()" ng-model-setter="ec.setExitValue($value)" >
+                $<input type="text" value="{{ ec.getExitValue() }}" ng-keyup="ec.setExitValue($value)" >
             </div>
         </fieldset>
     </form>

@@ -4,7 +4,7 @@ app.value('equityValue', {
 		sharesIssued: 1000000,
 		sharesOwnable: 20000,
 		pricePerShare: .50,
-		strikePricePerShare: .50,
+		strikePricePerShare: .50
 });
 
 app.controller('EquityValueController', ['equityValue', function(equityValue) {
@@ -48,8 +48,9 @@ app.controller('ExitController', ['equityValue', function(equityValue) {
 		}
 	};
 
-	this.setExitValue = function($value) {
-		equityValue.pricePerShare = ($value / equityValue.sharesIssued);
+	this.setExitValue = function() {
+		var value = event.target.value;
+		equityValue.pricePerShare = (event.target.value / equityValue.sharesIssued);
 	};
 
 }]);
