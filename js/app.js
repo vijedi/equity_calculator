@@ -1,26 +1,37 @@
 var app = angular.module('app', []);
 
-app.value('equityValue', {
-		sharesIssued: 1000000,
+var initialSharePrice = .50;
+
+app.value('employeeCompensation', {
 		sharesOwnable: 20000,
-		pricePerShare: .50,
-		strikePricePerShare: .50
+		strikePricePerShare: initialSharePrice,
+		salary: 80000
 });
 
-app.controller('EquityValueController', ['equityValue', function(equityValue) {
-	this.equityValue = equityValue;
+app.value('companyValue', {
+		sharesIssued: 1000000,
+		pricePerShare: initialSharePrice,
+		exitValue: 0,
+		companyValue: function() {
+			return this.sharesIssued * this.pricePerShare;
+		}
+});
+
+app.controller('ExitValueController', ['employeeCompensation', 'companyValue', function($empComp, $compVal) {
+	this.$empComp = $empComp;
+	this.$compVal = $compVal;
 
 	var oldThis = this;
 	this.getCompanyValue = function() {
-		return equityValue.sharesIssued * equityValue.pricePerShare;
+		return $compVal.companyValue();
 	};
 
 	this.getYourValue = function() {
-		return equityValue.sharesOwnable * equityValue.pricePerShare;
+		return $empComp.sharesOwnable * $compVal.pricePerShare;
 	};
 
 	this.getYourPrice = function() {
-		return equityValue.sharesOwnable * equityValue.strikePricePerShare;
+		return $empComp.sharesOwnable * $empComp.strikePricePerShare;
 	};
 
 	this.getYourNet = function() {
@@ -28,29 +39,35 @@ app.controller('EquityValueController', ['equityValue', function(equityValue) {
 	};
 
 	this.getYourOwnership = function() {
-		return 100.0 * equityValue.sharesOwnable / equityValue.sharesIssued;
+		return 100.0 * $empComp.sharesOwnable / $compVal.sharesIssued;
 	}
+}]);
+
+app.controller('CompanyController', ['companyValue', function($compVal) {
+	this.$compVal = $compVal;
 
 }]);
 
-app.controller('CompensationController', ['equityValue', function(equityValue) {
-	this.equityValue = equityValue;
+app.controller('CompensationController', ['employeeCompensation', 'companyValue', function($empComp, $compVal) {
+	this.$empComp = $empComp;
+	this.$compVal = $compVal;
 }]);
 
-app.controller('ExitController', ['equityValue', function(equityValue) {
-	this.equityValue = equityValue;
+app.controller('ExitController', ['employeeCompensation', 'companyValue', function($empComp, $compVal) {
+	this.$empComp = $empComp;
+	this.$compVal = $compVal;
 
 	this.getExitValue = function() {
-		if(equityValue.pricePerShare == equityValue.strikePricePerShare) {
+		if($compVal.pricePerShare == $empComp.strikePricePerShare) {
 			return 0;
 		} else {
-			return equityValue.sharesIssued * equityValue.pricePerShare;
+			return $compVal.sharesIssued * $compVal.pricePerShare;
 		}
 	};
 
 	this.setExitValue = function() {
 		var value = event.target.value;
-		equityValue.pricePerShare = (event.target.value / equityValue.sharesIssued);
+		$compVal.pricePerShare = (value / $compVal.sharesIssued);
 	};
 
 }]);

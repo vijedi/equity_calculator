@@ -5,7 +5,7 @@
     <script src="js/app.js"></script>
 </head>
 <body>
-<header ng-controller="EquityValueController as equity">
+<header ng-controller="ExitValueController as equity">
     <h1>How much is that {{ equity.getYourOwnership() | number }}% really worth?</h1>
 </header>
 <section id="compensation" ng-controller="CompensationController as comp">
@@ -14,24 +14,28 @@
         <fieldset>
             <label>Shares offered</label>
             <div>
-                <input type="text" ng-model="comp.equityValue.sharesOwnable" placeholder="Enter the shares you've been issued">
-            </div>
-        </fieldset>
-        <fieldset>
-            <label># of outstanding shares</label>
-            <div>
-                <input type="text" ng-model="comp.equityValue.sharesIssued" placeholder="Enter the number of shares the company issued" >
+                <input type="text" ng-model="comp.$empComp.sharesOwnable" placeholder="Enter the shares you've been issued">
             </div>
         </fieldset>
         <fieldset>
             <label>Strike price ($)</label>
             <div>
-                <input type="text" ng-model="comp.equityValue.strikePricePerShare" placeholder="Enter your strike price" >
+                <input type="text" ng-model="comp.$empComp.strikePricePerShare" placeholder="Enter your strike price" >
             </div>
         </fieldset>
     </form>
 </section>
-
+<section id="company" ng-controller="CompanyController as comp">
+    <form>
+        <h1>Let's enter some details about the company</h1>
+        <fieldset>
+            <label>How many initial shares were issued</label>
+            <div>
+                <input type="text" ng-model="comp.$compVal.sharesIssued" placeholder="The number of initial shares issued">
+            </div>
+        </fieldset>
+    </form>
+</section>
 <section id="exit" ng-controller="ExitController as ec">
     <form>
         <h1>The Magical Liquidity Event has finally happened!</h1>
@@ -44,7 +48,7 @@
     </form>
 </section>
 
-<section id="equityValue" ng-controller="EquityValueController as equity">
+<section id="exitValue" ng-controller="ExitValueController as equity">
     <h2>What's it all worth?</h2>
     <h3>Company Value
         <div>${{ equity.getCompanyValue() | number }}</div>
