@@ -14,19 +14,31 @@
         <fieldset>
             <label>Shares offered</label>
             <div>
-                <input type="text" ng-model="comp.equityValue.sharesOwnable" placeholder="Enter the shares you've been issued"/>
+                <input type="text" ng-model="comp.equityValue.sharesOwnable" placeholder="Enter the shares you've been issued">
             </div>
         </fieldset>
         <fieldset>
             <label># of outstanding shares</label>
             <div>
-                <input type="text" ng-model="comp.equityValue.sharesIssued" placeholder="Enter the number of shares the company issued" />
+                <input type="text" ng-model="comp.equityValue.sharesIssued" placeholder="Enter the number of shares the company issued" >
             </div>
         </fieldset>
         <fieldset>
             <label>Strike price ($)</label>
             <div>
-                <input type="text" ng-model="comp.equityValue.strikePricePerShare" placeholder="Enter your strike price" />
+                <input type="text" ng-model="comp.equityValue.strikePricePerShare" placeholder="Enter your strike price" >
+            </div>
+        </fieldset>
+    </form>
+</section>
+
+<section id="exit" ng-controller="ExitController as ec">
+    <form>
+        <h1>The Magical Liquidity Event has finally happened!</h1>
+        <fieldset>
+            <label>Sale Price</label>
+            <div>
+                $<input type="text" ng-model="$ngModelValue" ng-model-getter="ec.getExitValue()" ng-model-setter="ec.setExitValue($value)" >
             </div>
         </fieldset>
     </form>
