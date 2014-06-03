@@ -27,4 +27,13 @@ app.controller('EquityValueController', ['equityValue', function(equityValue) {
 		return oldThis.getYourValue() - oldThis.getYourPrice();
 	};
 
+	this.getYourOwnership = function() {
+		return 100.0 * equityValue.sharesOwnable / equityValue.sharesIssued;
+	}
+
+}]);
+
+app.controller('CompensationController', ['equityValue', function(equityValue) {
+	this.equityValue = equityValue;
+
 }]);
