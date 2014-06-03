@@ -1,0 +1,36 @@
+<!doctype html>
+<html ng-app>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.min.js"></script>
+        <script src="js/equity_value.js"></script>
+    </head>
+    <body>
+    <section id="investment">
+        <form>
+            <fieldset>
+                <label></label>
+            </fieldset>
+        </form>
+    </section>
+    <section id="equityValue" ng-controller="EquityValue">
+        <h3>Company Value
+            <div>${{ equity.companyValue | number }}</div>
+        </h3>
+        <h3>Value of your shares
+            <div>${{ equity.yourValue | number }}</div>
+        </h3>
+        <h3>Price you paid
+            <div>${{ equity.yourPrice | number }}</div>
+        </h3>
+        <h2>Your Net
+            <div>${{ (equity.yourValue - equity.yourPrice) | number}}</div>
+        </h2>
+    </section>
+    <div>
+        <label>Name:</label>
+        <input type="text" ng-model="yourName" placeholder="Enter a name here">
+        <hr>
+        <h1>Hello {{yourName}}!</h1>
+    </div>
+  </body>
+</html>
