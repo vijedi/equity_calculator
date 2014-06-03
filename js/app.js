@@ -2,6 +2,15 @@ var app = angular.module('app', []);
 
 var initialSharePrice = .50;
 
+function FundingRound(amount, valuation) {
+	this.amount = amount;
+	this.valuation = valuation;
+	this.preference = false;
+	this.preferenceAmount = 1;
+	this.participating = false;
+	this.particpiationStyle = 'bestOf';
+};
+
 app.value('employeeCompensation', {
 		sharesOwnable: 20000,
 		strikePricePerShare: initialSharePrice,
@@ -16,6 +25,8 @@ app.value('companyValue', {
 			return this.sharesIssued * this.pricePerShare;
 		}
 });
+
+app.value('fundingRounds', {rounds: []});
 
 app.controller('ExitValueController', ['employeeCompensation', 'companyValue', function($empComp, $compVal) {
 	this.$empComp = $empComp;
@@ -43,8 +54,19 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue', f
 	}
 }]);
 
-app.controller('CompanyController', ['companyValue', function($compVal) {
+app.controller('CompanyController', ['companyValue', 'fundingRounds', function($compVal, $fundingRounds) {
 	this.$compVal = $compVal;
+	this.$fundingRounds = $fundingRounds;
+
+	this.round = new FundingRound('', '');
+
+	var me = this;
+	this.addFundingRound = function(round) {
+		var currentPricePerShare = $compVal.pricePerShare;
+
+		me.$fundingRounds.rounds.push(round);
+		me.round = new FundingRound('', '');
+	};
 
 }]);
 
