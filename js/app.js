@@ -34,7 +34,7 @@ app.value('companyValue', {
 
 app.value('fundingRounds', {rounds: []});
 
-app.controller('ExitValueController', ['employeeCompensation', 'companyValue', function($empComp, $compVal) {
+app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  function($empComp, $compVal) {
 	this.$empComp = $empComp;
 	this.$compVal = $compVal;
 
@@ -60,11 +60,11 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue', f
 	}
 }]);
 
-app.controller('CompanyController', ['companyValue', 'fundingRounds', function($compVal, $fundingRounds) {
+app.controller('CompanyController', ['companyValue', 'fundingRounds', '$scope', function($compVal, $fundingRounds, $scope) {
 	this.$compVal = $compVal;
 	this.$fundingRounds = $fundingRounds;
 
-	this.round = new FundingRound();
+	$scope.round = new FundingRound();
 
 	var me = this;
 	this.addFundingRound = function(round) {
@@ -73,7 +73,7 @@ app.controller('CompanyController', ['companyValue', 'fundingRounds', function($
 		
 		var myRound = angular.extend(new FundingRound(), round);
 		me.$fundingRounds.rounds.push(myRound);
-		me.round = angular.extend(me.round, new FundingRound());
+		$scope.round = angular.extend($scope.round, new FundingRound());
 	};
 
 }]);
