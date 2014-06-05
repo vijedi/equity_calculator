@@ -34,7 +34,7 @@ app.value('companyValue', {
 		}
 });
 
-app.value('fundingRounds', {rounds: []});
+app.value('fundingRounds', []);
 
 app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  function($empComp, $compVal) {
 	this.$empComp = $empComp;
@@ -70,11 +70,11 @@ app.controller('CompanyController', ['companyValue', 'fundingRounds', '$scope', 
 
 	var me = this;
 	this.addFundingRound = function(round) {
-		round.number = me.$fundingRounds.rounds.length;
+		round.number = me.$fundingRounds.length;
 		round.preMoneyShares = me.$compVal.sharesIssued;
 		
 		var myRound = angular.extend(new FundingRound(), round);
-		me.$fundingRounds.rounds.push(myRound);
+		me.$fundingRounds.push(myRound);
 		$scope.round = angular.extend($scope.round, new FundingRound());
 	};
 

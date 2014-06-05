@@ -37,9 +37,9 @@
     </form>
     <form name="fundingForm">
         <h2>Did the company us funding to grow?</h2>
-        <p>The company has taken {{ comp.$fundingRounds.rounds.length }} funding rounds.</p>
+        <p>The company has taken {{ comp.$fundingRounds.length }} funding rounds.</p>
         <div id="fundingRounds">
-            <div ng-repeat="myRound in comp.$fundingRounds.rounds">
+            <div ng-repeat="myRound in comp.$fundingRounds">
                 <div class="fundingRound">
                     <h3>Funding Round {{ myRound.number }}: <input type="text" ng-model="myRound.valuation" > ${{ myRound.valuation | number }} Pre-money valuation</h3>
                     <div><span class="number">{{ myRound.sharesIssued() | number }} new shares issued, 
