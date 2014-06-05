@@ -41,7 +41,9 @@
         <div id="fundingRounds">
             <div ng-repeat="myRound in comp.$fundingRounds.rounds">
                 <div class="fundingRound">
-                    <h3>Funding Round {{ myRound.number }}: ${{ myRound.valuation | number }} Pre-money valuation</h3>
+                    <h3>Funding Round {{ myRound.number }}: <input type="text" ng-model="myRound.valuation" > ${{ myRound.valuation | number }} Pre-money valuation</h3>
+                    <div><span class="number">{{ myRound.sharesIssued() | number }} new shares issued, 
+                         <span class="number">${{ myRound.pricePerShare() | number }} per share</span>
                 </div>
             </div>
         </div>

@@ -11,10 +11,12 @@ function FundingRound() {
 	this.participating = false;
 	this.participationStyle = 'bestOf';
 	this.preMoneyShares = 1;
+	this.pricePerShare = function() {
+		return this.valuation / this.preMoneyShares;
+	};
 	this.sharesIssued = function() {
-		var pricePerShare = this.valuation / this.preMoneyShares;
-		return this.amount / pricePerShare; 
-	}
+		return this.amount / this.pricePerShare(); 
+	};
 };
 
 app.value('employeeCompensation', {
