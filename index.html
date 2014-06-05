@@ -86,7 +86,7 @@
         <fieldset>
             <label>Sale Price</label>
             <div>
-                $<input type="text" value="{{ ec.getExitValue() }}" ng-keyup="ec.setExitValue($value)" >
+                $<input type="text" ng-model="ec.$compVal.exitAmount" >
             </div>
         </fieldset>
     </form>
@@ -107,7 +107,7 @@
         <div>${{ equity.getYourNet() | number}}</div>
     </h1>
     <h1>Your Ownership Percentage
-        <div>{{ equity.getYourOwnership() | number }}%</div>
+        <div>{{ equity.getYourOwnership() | number }}% (intial ownership: {{ equity.getInitialOwnership() | number }}%)</div>
     </h1>
 </section>
 </body>

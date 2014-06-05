@@ -28,11 +28,10 @@ app.value('employeeCompensation', {
 app.value('companyValue', {
 		sharesIssued: 1000000,
 		pricePerShare: initialSharePrice,
-		exitValue: 0,
-		companyValue: function() {
-			return this.sharesIssued * this.pricePerShare;
-		}
+		exitAmount: 0,
+		totalSharesIssued: 1000000
 });
+
 
 app.value('fundingRounds', []);
 
@@ -42,12 +41,48 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  
 
 	var oldThis = this;
 
+	this.issuedShares = function() {
+		var totalShares = $compVal.sharesIssued;
+		angular.forEach($fundingRounds, function(round, idx) {
+			totalShares += round.sharesIssued();
+		});
+
+		return totalShares;
+	};
+
 	this.getCompanyValue = function() {
-		return $compVal.companyValue();
+		if(0 < $compVal.exitAmount ) {
+			return $compVal.exitAmount;
+		} else if(0 < $fundingRounds.length) {
+			var lastRound = $fundingRounds.slice(-1)[0];
+			return parseInt(lastRound.valuation) + parseInt(lastRound.amount);
+		} else {
+			return $compVal.totalSharesIssued * initialSharePrice;
+		}
 	};
 
 	this.getYourValue = function() {
-		return $empComp.sharesOwnable * $compVal.pricePerShare;
+	
+		var calculateAmountToCommon = function() {
+			var commonPool = oldThis.issuedShares();
+			var commonAmount = oldThis.getCompanyValue();
+
+			for(var i = $fundingRounds.length - 1; i >= 0; i--) {
+				var round = $fundingRounds[i];
+				if(round.preference) {
+
+				}
+			}
+
+			return {
+				commonPool: commonPool,
+				commonAmount: commonAmount
+			};
+		};
+
+		var commonStock = calculateAmountToCommon();
+
+		return 1.0 * $empComp.sharesOwnable / commonStock.commonPool * commonStock.commonAmount;
 	};
 
 	this.getYourPrice = function() {
@@ -59,6 +94,10 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  
 	};
 
 	this.getYourOwnership = function() {
+		return 100.0 * $empComp.sharesOwnable / oldThis.issuedShares();
+	}
+
+	this.getInitialOwnership = function() {
 		return 100.0 * $empComp.sharesOwnable / $compVal.sharesIssued;
 	}
 }]);
@@ -83,28 +122,6 @@ app.controller('CompensationController', ['employeeCompensation', 'companyValue'
 	this.$compVal = $compVal;
 }]);
 
-app.controller('ExitController', ['employeeCompensation', 'companyValue', 'fundingRounds', function($empComp, $compVal, $fundingRounds) {
-	this.$empComp = $empComp;
+app.controller('ExitController', ['companyValue',  function($compVal) {
 	this.$compVal = $compVal;
-	this.$fundingRounds = $fundingRounds;
-
-	this.getExitValue = function() {
-		if($compVal.pricePerShare == $empComp.strikePricePerShare) {
-			return 0;
-		} else {
-			return $compVal.sharesIssued * $compVal.pricePerShare;
-		}
-	};
-
-	this.setExitValue = function() {
-		debugger;
-		var value = event.target.value;
-		var sharesIssued = $compVal.sharesIssued;
-		angular.forEach($fundingRounds, function(round,number) {
-			sharesIssued += round.sharesIssued();
-		});
-
-		$compVal.pricePerShare = (value / sharesIssued);
-	};
-
 }]);
