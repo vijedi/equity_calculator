@@ -2,7 +2,7 @@ var app = angular.module('app', []);
 
 var initialSharePrice = .50;
 
-function FundingRound() {
+function FundingRound(fundingRounds, companyValue) {
 	this.number = 0;
 	this.amount = '';
 	this.valuation = '';
@@ -10,9 +10,19 @@ function FundingRound() {
 	this.preferenceAmount = 1;
 	this.participating = false;
 	this.participationStyle = 'bestOf';
-	this.preMoneyShares = 1;
+	this.allRounds = fundingRounds;
+	this.companyValue = companyValue;
+	this.preMoneyShares = function() {
+		var totalShares = this.companyValue.sharesIssued;
+		for( var i = 0; i < this.number; i++) {
+			totalShares += this.allRounds[i].sharesIssued();
+		}
+
+		return totalShares;
+	};
 	this.pricePerShare = function() {
-		return this.valuation / this.preMoneyShares;
+		debugger;
+		return this.valuation / this.preMoneyShares();
 	};
 	this.sharesIssued = function() {
 		return this.amount / this.pricePerShare(); 
@@ -108,9 +118,8 @@ app.controller('CompanyController', ['companyValue', 'fundingRounds', '$scope', 
 
 	var me = this;
 	this.addFundingRound = function() {
-		var round = new FundingRound();
+		var round = new FundingRound(me.$fundingRounds, me.$compVal);
 		round.number = me.$fundingRounds.length;
-		round.preMoneyShares = me.$compVal.sharesIssued;
 		me.$fundingRounds.push(round);
 	};
 
