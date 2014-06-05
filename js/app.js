@@ -36,11 +36,12 @@ app.value('companyValue', {
 
 app.value('fundingRounds', []);
 
-app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  function($empComp, $compVal) {
+app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  'fundingRounds', function($empComp, $compVal, $fundingRounds) {
 	this.$empComp = $empComp;
 	this.$compVal = $compVal;
 
 	var oldThis = this;
+
 	this.getCompanyValue = function() {
 		return $compVal.companyValue();
 	};
@@ -66,17 +67,14 @@ app.controller('CompanyController', ['companyValue', 'fundingRounds', '$scope', 
 	this.$compVal = $compVal;
 	this.$fundingRounds = $fundingRounds;
 
-	$scope.round = new FundingRound();
-
 	var me = this;
-	this.addFundingRound = function(round) {
+	this.addFundingRound = function() {
+		var round = new FundingRound();
 		round.number = me.$fundingRounds.length;
 		round.preMoneyShares = me.$compVal.sharesIssued;
-		
-		var myRound = angular.extend(new FundingRound(), round);
-		me.$fundingRounds.push(myRound);
-		$scope.round = angular.extend($scope.round, new FundingRound());
+		me.$fundingRounds.push(round);
 	};
+
 
 }]);
 
@@ -85,9 +83,10 @@ app.controller('CompensationController', ['employeeCompensation', 'companyValue'
 	this.$compVal = $compVal;
 }]);
 
-app.controller('ExitController', ['employeeCompensation', 'companyValue', function($empComp, $compVal) {
+app.controller('ExitController', ['employeeCompensation', 'companyValue', 'fundingRounds', function($empComp, $compVal, $fundingRounds) {
 	this.$empComp = $empComp;
 	this.$compVal = $compVal;
+	this.$fundingRounds = $fundingRounds;
 
 	this.getExitValue = function() {
 		if($compVal.pricePerShare == $empComp.strikePricePerShare) {
@@ -98,8 +97,14 @@ app.controller('ExitController', ['employeeCompensation', 'companyValue', functi
 	};
 
 	this.setExitValue = function() {
+		debugger;
 		var value = event.target.value;
-		$compVal.pricePerShare = (value / $compVal.sharesIssued);
+		var sharesIssued = $compVal.sharesIssued;
+		angular.forEach($fundingRounds, function(round,number) {
+			sharesIssued += round.sharesIssued();
+		});
+
+		$compVal.pricePerShare = (value / sharesIssued);
 	};
 
 }]);

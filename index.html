@@ -39,45 +39,44 @@
         <h2>Did the company us funding to grow?</h2>
         <p>The company has taken {{ comp.$fundingRounds.length }} funding rounds.</p>
         <div id="fundingRounds">
-            <div ng-repeat="myRound in comp.$fundingRounds">
+            <div ng-repeat="round in comp.$fundingRounds">
                 <div class="fundingRound">
-                    <h3>Funding Round {{ myRound.number }}: <input type="text" ng-model="myRound.valuation" > ${{ myRound.valuation | number }} Pre-money valuation</h3>
-                    <div><span class="number">{{ myRound.sharesIssued() | number }} new shares issued, 
-                         <span class="number">${{ myRound.pricePerShare() | number }} per share</span>
+                    <fieldset>
+                        <label>Amount of funding</label>
+                        <div>
+                            <input type="text" placeholder="Amount of funding" ng-model="round.amount">
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <label>Pre-money valuation</label>
+                        <div>
+                            <input type="text" placeholder="Pre-money valuation" ng-model="round.valuation">
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <label>Preferences</label>
+                        <div>
+                            <label for="preference"><input id="preference" type="checkbox" ng-model="round.preference"> Preferences?</label>
+                            <div id="preference_options">
+                                <label for="preference_amount"> at </label> <input id="preference_amount" type="text" ng-model="round.preferenceAmount">
+                            <label for="participating"><input id="participating" type="checkbox" ng-model="round.participating"> Participating?</label>
+                            <select ng-model="round.participationStyle" ng-init="round.participationStyle = 'bestOf'">
+                                <option value="bestOf" >Best of participation or preference</option>
+                                <option value="both">Has preference and participates</option>
+                                <option value="yourScrewed">Participates at preference</option>
+                            </select>    
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div><span class="number">{{ round.sharesIssued() | number }}</span> new shares issued, 
+                         <span class="number">${{ round.pricePerShare() | number }} per share</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div>
-            <fieldset>
-                <label>Amount of funding</label>
-                <div>
-                    <input type="text" placeholder="Amount of funding" ng-model="round.amount">
-                </div>
-            </fieldset>
-            <fieldset>
-                <label>Pre-money valuation</label>
-                <div>
-                    <input type="text" placeholder="Pre-money valuation" ng-model="round.valuation">
-                </div>
-            </fieldset>
-            <fieldset>
-                <label>Preferences</label>
-                <div>
-                    <label for="preference"><input id="preference" type="checkbox" ng-model="round.preference"> Preferences?</label>
-                    <div id="preference_options">
-                        <label for="preference_amount"> at </label> <input id="preference_amount" type="text" ng-model="round.preferenceAmount">
-                    <label for="participating"><input id="participating" type="checkbox" ng-model="round.participating"> Participating?</label>
-                    <select ng-model="round.participationStyle" ng-init="round.participationStyle = 'bestOf'">
-                        <option value="bestOf" >Best of participation or preference</option>
-                        <option value="both">Has preference and participates</option>
-                        <option value="yourScrewed">Participates at preference</option>
-                    </select>    
-                    </div>
-                </div>
-            </fieldset>
-        </div>
+
         <div class="buttons">
-            <button type="button" ng-click="comp.addFundingRound(round)">Add Round</button>
+            <button type="button" ng-click="comp.addFundingRound()">Add Round</button>
         </div>
     </form>
 </section>
