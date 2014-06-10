@@ -1,7 +1,7 @@
 <!doctype html>
 <html ng-app="app">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.js"></script>
     <script src="js/app.js"></script>
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300|Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -20,93 +20,96 @@
 
 </head>
 <body>
-<div id="formElements">
-    <header ng-controller="ExitValueController as equity">
-        <h1>How much is that {{ equity.getYourOwnership() | number }}% really worth?</h1>
-    </header>
-    <section id="compensation" ng-controller="CompensationController as comp">
-        <form>
-            <h1>What equity were you offered?</h1>
-            <fieldset>
-                <label>The number of shares</label>
-                <div>
-                    <input type="text" ng-model="comp.$empComp.sharesOwnable" placeholder="Enter the shares you've been issued">
-                </div>
-            </fieldset>
-            <fieldset>
-                <label>Strike price ($)</label>
-                <div>
-                    <input type="text" ng-model="comp.$empComp.strikePricePerShare" placeholder="Enter your strike price" >
-                </div>
-            </fieldset>
-        </form>
-        <div style="clear: both"></div>
-    </section>
-    <section id="company" ng-controller="CompanyController as comp">
-        <form>
-            <h1>Let's enter some details about the company</h1>
-            <fieldset>
-                <label>The number of shares issued</label>
-                <div>
-                    <input type="text" ng-model="comp.$compVal.sharesIssued" placeholder="The number of initial shares issued">
-                </div>
-            </fieldset>
-        </form>
-        <form name="fundingForm">
-            <h2>Did the company use funding to grow?</h2>
-            <p>The company has taken {{ comp.$fundingRounds.length }} funding rounds.</p>
-            <div id="fundingRounds">
-                <div ng-repeat="round in comp.$fundingRounds">
-                    <div class="fundingRound">
-                        <fieldset class="amount">
-                            <label>Amount raised in this round</label>
-                            <div>
-                                <input type="text" placeholder="Dollar amount of funding" ng-model="round.amount">
-                            </div>
-                        </fieldset>
-                        <fieldset class="premoney">
-                            <label>Pre-money valuation</label>
-                            <div>
-                                <input type="text" placeholder="pre-money valuation" ng-model="round.valuation">
-                            </div>
-                        </fieldset>
-                        <fieldset class="preferences">
-                            <div>
-                                <label for="preference"><input id="preference" type="checkbox" ng-model="round.preference"> Preferences?</label>
-                                <div id="preference_options">
-                                    <label for="preference_amount"> at &nbsp;</label> <input id="preference_amount" type="text" ng-model="round.preferenceAmount">x
-                                    <label for="participating"><input id="participating" type="checkbox" ng-model="round.participating"> Participating?</label>
-                                    <select ng-model="round.participationStyle" ng-init="round.participationStyle = 'bestOf'">
-                                        <option value="bestOf" >Best of participation or preference</option>
-                                        <option value="both">Has preference and participates</option>
-                                    </select>    
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div><span class="number">{{ round.sharesIssued() | number }}</span> new shares issued, 
-                             <span class="number">${{ round.pricePerShare() | number }} per share</span>
+
+<header ng-controller="ExitValueController as equity">
+    <h1>How much is that {{ equity.getYourOwnership() | number }}% really worth?</h1>
+    <p>Early stage compensation often involves giving a portion of the salary in order to 
+        strike a claim on the riches that could come from a successful exit. It's impossible to predict
+        exactly how a company will grow and what that could mean for your bottom line, but this calculator lets
+        you plug in numbers and see what comes out at the end.</p>
+</header>
+<section id="compensation" ng-controller="CompensationController as comp">
+    <form>
+        <h1>What equity were you offered?</h1>
+        <fieldset>
+            <label>The number of shares</label>
+            <div>
+                <input type="text" ng-model="comp.$empComp.sharesOwnable" format="number" placeholder="Enter the shares you've been issued">
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>Strike price ($)</label>
+            <div>
+                <input type="text" ng-model="comp.$empComp.strikePricePerShare" placeholder="Enter your strike price" >
+            </div>
+        </fieldset>
+    </form>
+    <div style="clear: both"></div>
+</section>
+<section id="company" ng-controller="CompanyController as comp">
+    <form>
+        <h1>Let's enter some details about the company</h1>
+        <fieldset>
+            <label>The number of shares issued</label>
+            <div>
+                <input type="text" ng-model="comp.$compVal.sharesIssued" format="number" placeholder="The number of initial shares issued">
+            </div>
+        </fieldset>
+    </form>
+    <form name="fundingForm">
+        <h2>Did the company use funding to grow?</h2>
+        <p>The company has taken {{ comp.$fundingRounds.length }} funding rounds.</p>
+        <div id="fundingRounds">
+            <div ng-repeat="round in comp.$fundingRounds">
+                <div class="fundingRound">
+                    <fieldset class="amount">
+                        <label>Amount raised in this round</label>
+                        <div>
+                            <input type="text" placeholder="Dollar amount of funding" format="number" ng-model="round.amount">
                         </div>
+                    </fieldset>
+                    <fieldset class="premoney">
+                        <label>Pre-money valuation</label>
+                        <div>
+                            <input type="text" placeholder="pre-money valuation" format="number" ng-model="round.valuation">
+                        </div>
+                    </fieldset>
+                    <fieldset class="preferences">
+                        <div>
+                            <label for="preference"><input id="preference" type="checkbox" ng-model="round.preference"> Preferences?</label>
+                            <div id="preference_options">
+                                <label for="preference_amount"> at &nbsp;</label> <input id="preference_amount" type="text" ng-model="round.preferenceAmount">x
+                                <label for="participating"><input id="participating" type="checkbox" ng-model="round.participating"> Participating?</label>
+                                <select ng-model="round.participationStyle" ng-init="round.participationStyle = 'bestOf'">
+                                    <option value="bestOf" >Best of participation or preference</option>
+                                    <option value="both">Has preference and participates</option>
+                                </select>    
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div><span class="number">{{ round.sharesIssued() | number }}</span> new shares issued, 
+                         <span class="number">${{ round.pricePerShare() | number }} per share</span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="buttons">
-                <button type="button" ng-click="comp.addFundingRound()">Add Round</button>
+        <div class="buttons">
+            <button type="button" ng-click="comp.addFundingRound()"><span>+</span> Yes, Add Round</button>
+        </div>
+    </form>
+</section>
+<section id="exit" ng-controller="ExitController as ec">
+    <form>
+        <h1>The Liquidity Event has Finally Happened!</h1>
+        <fieldset>
+            <label>Sale Price ($)</label>
+            <div>
+                <input type="text" ng-model="ec.$compVal.exitAmount" format="number">
             </div>
-        </form>
-    </section>
-    <section id="exit" ng-controller="ExitController as ec">
-        <form>
-            <h1>The Liquidity Event has Finally Happened!</h1>
-            <fieldset>
-                <label>Sale Price ($)</label>
-                <div>
-                    <input type="text" ng-model="ec.$compVal.exitAmount" >
-                </div>
-            </fieldset>
-        </form>
-    </section>
-</div>
+        </fieldset>
+    </form>
+</section>
 
 <section id="exitValue" ng-controller="ExitValueController as equity">
     <h2>The Totals</h2>
@@ -114,21 +117,29 @@
         <div>${{ equity.getCompanyValue() | number }}</div>
     </h3>
     <h3>Value of your shares
-        <div>${{ equity.getYourValue() | number }}</div>
+        <div>${{ equity.getYourValue() | number:2 }}</div>
     </h3>
     <h3>Price you paid
         <div>${{ equity.getYourPrice() | number }}</div>
     </h3>
     <h3>Your Initial Ownership
-        <div>{{ equity.getInitialOwnership() | number }}%</div>
+        <div>{{ equity.getInitialOwnership() | number:3 }}%</div>
     </h3>
     <h3>Your Final Percentage
-        <div>{{ equity.getYourOwnership() | number }}%</div>
+        <div>{{ equity.getYourOwnership() | number:3 }}%</div>
     </h3>
     <h1>Your Net
-        <div>${{ equity.getYourNet() | number}}</div>
+        <div>${{ equity.getYourNet() | number:2}}</div>
     </h1>
     
 </section>
+
+<section id="legalStuff">
+    <div>&copy; 2014 Tejus Parikh. Released under GPLv2.</div>
+    <div>This project is not a financial planning tool. I am not a financial advisor. Any conclusions drawn and actions taken from the use of this tool are your own and I am in no way responsible or liable. Consult a real financial advisor if you have real questions 
+    about equity.</div>
+    <div>Money image (c) <a href="https://www.flickr.com/photos/59937401@N07/">Images Money</a>, <a href="https://www.flickr.com/photos/59937401@N07/5475013342">original source</a></div>
+</section>
+
 </body>
 </html>

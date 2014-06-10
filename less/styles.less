@@ -1,13 +1,18 @@
 @color1: #17B225;
 @color2: #73FF7F;
 @color3: #139BFF;
+@color4: #B404CC;
 
 @headerColor: @color1;
 @lightestTextColor: white;
 @darkTextColor: #222;
 
 .formElement() {
-	padding: 30px 10px 30px 10%;
+	padding: 30px 325px 30px 172px;
+}
+
+.separatorShadow() {
+	box-shadow: 0px -3px 12px 0px rgba(50, 50, 50, 0.64);
 }
 
 .headerFont(@size) {
@@ -16,6 +21,11 @@
 	font-weight: normal;
 	padding: .5em 0;
 	margin: 0;
+}
+
+.horizontalFieldSet() {
+	float: left;
+	margin-right: 40px;
 }
 
 h1 {
@@ -49,10 +59,25 @@ body {
 }
 
 header {
+
 	.formElement();
-	background-color: @color1;
-	color: @lightestTextColor;
+	background-image: url(../images/money.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	color: @darkTextColor;
+	text-align: center;
+	padding-top: 70px;
+	padding-bottom: 70px;
 	h1 {
+		font-size: 50px;
+	}
+
+	p {
+		font-size: 19px;
+		line-height: 1.3em;
+		font-weight: normal;
+		text-align: left;
 
 	}
 }
@@ -63,12 +88,19 @@ label {
 	font-family: 'Lato', sans-serif;
 }
 
-input[type='text'] {
+input[type='text'],input[type='number'] {
 	color: @darkTextColor;
 	font-size: 18px;
 	padding: 6px;
 	border-radius: 8px;
 	border: 1px solid lighten(@darkTextColor, 40%);
+	width: 300px;
+}
+
+select {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	padding: 6px;
 }
 
 section {
@@ -77,19 +109,27 @@ section {
 		.headerFont(2em);
 	}
 
+	.withBackgroundImage(@image) {
+		background-image: @image;
+		background-repeat: no-repeat;
+		background-position: 16px 48px;
+	}
+
 	&#compensation {
 		.formElement();
-		background-color: @color2;
-		color: @darkTextColor;
+		.withBackgroundImage(url(../images/handshake.png));
+		background-color: @color1;
+		color: @lightestTextColor;
 
 		fieldset {
-			float: left;
-			margin-right: 40px;
+			.horizontalFieldSet();
 		}
 	}
 
 	&#company {
 		.formElement();
+		.separatorShadow();
+		.withBackgroundImage(url(../images/buildings.png));
 		background-color: @color3;
 		color: @lightestTextColor;
 
@@ -99,27 +139,92 @@ section {
 
 		button {
 			font-size: 20px;
-			background-color: #CC5824;
+			background-color: #494D99;
 			font-family: 'Montserrat', sans-serif;
 			font-weight: normal;
 			padding: 10px 15px;
 			border-radius: 16px;
-			border: 1px solid #CC5824;
+			border: 1px solid #494D99;
 			color: @lightestTextColor;
+		}
+
+		fieldset.amount {
+			.horizontalFieldSet();
+		}
+		fieldset.premoney {
+			.horizontalFieldSet();
+		}
+
+		fieldset.preferences {
+			clear: both;
+			padding: 15px 0;
+			#preference_options {
+				display: inline-block;
+			}
+
+			input#preference_amount {
+				width: 20px;
+			}
+
+			label[for='preference'] {
+				margin-right: 30px;
+			}
+
+			label[for='participating'] {
+				margin-left: 30px;
+			}
+		}
+
+		.fundingRound {
+			border-top: 1px solid lighten(@color3, 20%);
+			border-bottom: 1px solid lighten(@color3, 15%);
+			padding: 20px 0;
+		}
+
+		.buttons {
+			clear: both;
+			padding-top: 15px;
 		}
 	}
 
+	&#exit {
+		.formElement();
+		.separatorShadow();
+		.withBackgroundImage(url(../images/celebration.png));
+		background-color: @color4;
+		color: @lightestTextColor;
+	}
 }
 
-#formElements {
-	margin-left: 0;
-	margin-right: 300px;
+#legalStuff {
+	font-size: 13px;
+	padding: 20px 172px 20px 20px;
+	color: @lightestTextColor;
+
+	a, a:visited {
+		color: white;
+	}
 }
+
 
 #exitValue {
+	background: #393b44;
+	box-shadow: 3px 5px 17px 0px rgba(50, 50, 50, 0.6);
+	padding: 25px;
 	position: fixed;
 	width: 250px;
 	right: 25px;
-	top: 100px;
+	top: 70px;
 	color: @lightestTextColor;
+	font-size: 13px;
+	h1, h3 {
+		font-family: 'Lato', sans-serif;
+		font-weight: 300;
+		div {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 1.1em;
+			font-weight: normal;
+		}
+	}
+	
 }
