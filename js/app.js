@@ -17,11 +17,10 @@ function FundingRound(fundingRounds, companyValue) {
 		for( var i = 0; i < this.number; i++) {
 			totalShares += this.allRounds[i].sharesIssued();
 		}
-
 		return totalShares;
 	};
+	
 	this.pricePerShare = function() {
-		debugger;
 		return this.valuation / this.preMoneyShares();
 	};
 	this.sharesIssued = function() {
@@ -77,11 +76,43 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  
 			var commonPool = oldThis.issuedShares();
 			var commonAmount = oldThis.getCompanyValue();
 
+			/* Check to see if the amount allocated to preferred stock
+				is better or worse than a payout of the funds
+			*/
+			var participatingPool = 0;
+			var participatingAmount = 0;
+
 			for(var i = $fundingRounds.length - 1; i >= 0; i--) {
 				var round = $fundingRounds[i];
 				if(round.preference) {
-
+					// pull out all non participating shares
+					if(!round.participating) {
+						// Pay out the preference and pull the shares out of the pool
+						commonAmount = commonAmount - (round.amount * round.preferenceAmount);
+						commonPool = commonPool - round.sharesIssued();
+					}
+					if(round.participating) {
+						if('both' == round.participationStyle) {
+							// Pay out the preference, but leave the shares to participate
+							commonAmount = commonAmount - (round.amount * round.preferenceAmount);
+						} else {
+							participatingPool += round.sharesIssued();
+							participatingAmount += round.amount * round.preferenceAmount;
+						}
+					}
 				}
+			}
+
+			var pricePerCommonShare = commonPool / commonAmount;
+			var amountIfParticipating = pricePerCommonShare * participatingPool;
+			if(amountIfParticipating > participatingAmount) {
+				commonPool -= participatingPool;
+				commonAmount -= participatingAmount;
+			}
+
+			// Share holders don't have to pay debt
+			if(0 > commonAmount) {
+				commonAmount = 0;
 			}
 
 			return {
