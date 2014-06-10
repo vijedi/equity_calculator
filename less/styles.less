@@ -2,6 +2,7 @@
 @color2: #73FF7F;
 @color3: #139BFF;
 @color4: #B404CC;
+@color5: #e39942;
 
 @headerColor: @color1;
 @lightestTextColor: white;
@@ -196,6 +197,18 @@ section {
 			width: 48px;
 		}
 		input[type="text"].percent {
+			width: 48px;
+		}
+	}
+
+	&#bigCo {
+		.formElement();
+		.separatorShadow;
+		.withBackgroundImage(url(../images/man_in_chair.png));
+		background-color: @color5;
+		color: @lightestTextColor;
+
+		input[type='text'].interestRate {
 			width: 48px;
 		}
 	}

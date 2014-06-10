@@ -43,6 +43,12 @@
                 <input type="text" ng-model="comp.$empComp.strikePricePerShare" placeholder="Enter your strike price" >
             </div>
         </fieldset>
+        <fieldset>
+            <label>Your Salary($)</label>
+            <div>
+                <input type="text" ng-model="comp.$empComp.salary" format="number" placeholder="Your startup salary">
+            </div>
+        </fieldset>
     </form>
     <div style="clear: both"></div>
 </section>
@@ -119,28 +125,49 @@
         </fieldset>
     </form>
 </section>
-
+<section id="bigCo" ng-controller="BigCompanyController as bc">
+    <form>
+        <h1>What would you have earned at a (souless?) big company?</h1>
+        <fieldset>
+            <label>Enter your big-co salary ($)</label>
+            <div>
+                <input type="text" format="number" ng-model="bc.$bigCo.salary" placeholder="Cost of your soul">
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>Rate of return</label>
+            <div>
+                <input type="text" class="interestRate" ng-model="bc.$bigCo.interestRate" placeholder="Rate of return on difference">
+                <label>% return on salary difference</label>
+            </div>
+        </fieldset>
+    </form>
+</section>
 <section id="exitValue" ng-controller="ExitValueController as equity">
     <h2>The Totals</h2>
     <h3>Company Value
         <div>${{ equity.getCompanyValue() | number }}</div>
     </h3>
-    <h3>Value of your shares
-        <div>${{ equity.getYourValue() | number:2 }}</div>
+    <h3>ShareValue - Final (Initial)
+        <div>${{ equity.getYourValue() | number:2 }} (${{ equity.getYourPrice() | number }})</div>
     </h3>
-    <h3>Price you paid
-        <div>${{ equity.getYourPrice() | number }}</div>
-    </h3>
-    <h3>Your Initial Ownership
-        <div>{{ equity.getInitialOwnership() | number:3 }}%</div>
-    </h3>
-    <h3>Your Final Percentage
-        <div>{{ equity.getYourOwnership() | number:3 }}%</div>
+    <h3>Ownership - Final (Initial)
+        <div>{{ equity.getYourOwnership() | number:3 }}% ({{ equity.getInitialOwnership() | number:3 }}%)</div>
     </h3>
     <h1>Your Net
         <div>${{ equity.getYourNet() | number:2}}</div>
     </h1>
     
+    <div class="hr"></div>
+    <h4>Total Big Co Earnings
+        <div>${{ equity.totalBigCoEarnings() | number:2 }}</div>
+    </h4>
+
+    <h4>Total Startup Earnings
+        <div>${{ equity.totalStartupEarnings() | number:2 }}</div>
+    </h4>
+
+
 </section>
 
 <section id="legalStuff">

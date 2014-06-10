@@ -49,8 +49,14 @@ app.value('exitParameters', {
 
 app.value('fundingRounds', []);
 
+app.value('bigCompanyCompensation', {
+	salary: 100000,
+	interestRate: 5.75
+});
+
 app.controller('ExitValueController', ['employeeCompensation', 'companyValue', 'fundingRounds', 'exitParameters',
-	function($empComp, $compVal, $fundingRounds, $exitParameters) {
+	'bigCompanyCompensation',
+	function($empComp, $compVal, $fundingRounds, $exitParameters, $bigCoComp) {
 	this.$empComp = $empComp;
 	this.$compVal = $compVal;
 
@@ -146,10 +152,28 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue', '
 
 	this.getYourOwnership = function() {
 		return 100.0 * oldThis.employeeSharesOwnable() / oldThis.issuedShares();
-	}
+	};
 
 	this.getInitialOwnership = function() {
 		return 100.0 * $empComp.sharesOwnable / $compVal.sharesIssued;
+	};
+
+	this.bigCoInterest = function() {
+		var monthlyRateOfReturn = $bigCoComp.interestRate / (12 * 100);
+		var diffPerMonth = ($bigCoComp.salary - $empComp.salary)/12;
+		var amountCompounded = 0;
+		for(var i = 1; i < $exitParameters.months; i++) {
+			amountCompounded += diffPerMonth + amountCompounded * monthlyRateOfReturn;
+		}
+		return amountCompounded;
+	};
+
+	this.totalBigCoEarnings = function() {
+		return oldThis.bigCoInterest() + ($exitParameters.months / 12) * $bigCoComp.salary;
+	};
+
+	this.totalStartupEarnings = function() {
+		return oldThis.getYourNet() + ($exitParameters.months / 12) * $empComp.salary
 	}
 }]);
 
@@ -175,6 +199,10 @@ app.controller('CompensationController', ['employeeCompensation', 'companyValue'
 app.controller('ExitController', ['companyValue', 'exitParameters', function($compVal, $exitParams) {
 	this.$compVal = $compVal;
 	this.$exitParams = $exitParams;
+}]);
+
+app.controller('BigCompanyController', ['bigCompanyCompensation', function($bigCo) {
+	this.$bigCo = $bigCo;
 }]);
 
 app.directive('format', ['$filter', function ($filter) {
