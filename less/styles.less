@@ -1,5 +1,6 @@
 @color1: #17B225;
 @color2: #73FF7F;
+@color3: #139BFF;
 
 @headerColor: @color1;
 @lightestTextColor: white;
@@ -56,8 +57,22 @@ header {
 	}
 }
 
+label {
+	font-size: 20px;
+	font-weight: 300;
+	font-family: 'Lato', sans-serif;
+}
+
+input[type='text'] {
+	color: @darkTextColor;
+	font-size: 18px;
+	padding: 6px;
+	border-radius: 8px;
+	border: 1px solid lighten(@darkTextColor, 40%);
+}
 
 section {
+	clear: both;
 	h1 {
 		.headerFont(2em);
 	}
@@ -66,7 +81,34 @@ section {
 		.formElement();
 		background-color: @color2;
 		color: @darkTextColor;
+
+		fieldset {
+			float: left;
+			margin-right: 40px;
+		}
 	}
+
+	&#company {
+		.formElement();
+		background-color: @color3;
+		color: @lightestTextColor;
+
+		form[name="fundingForm"] {
+			padding-top: 40px;
+		}
+
+		button {
+			font-size: 20px;
+			background-color: #CC5824;
+			font-family: 'Montserrat', sans-serif;
+			font-weight: normal;
+			padding: 10px 15px;
+			border-radius: 16px;
+			border: 1px solid #CC5824;
+			color: @lightestTextColor;
+		}
+	}
+
 }
 
 #formElements {
