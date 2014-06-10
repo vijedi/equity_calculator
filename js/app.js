@@ -41,10 +41,16 @@ app.value('companyValue', {
 		totalSharesIssued: 1000000
 });
 
+app.value('exitParameters', {
+		months: 48,
+		vested: 100
+});
+
 
 app.value('fundingRounds', []);
 
-app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  'fundingRounds', function($empComp, $compVal, $fundingRounds) {
+app.controller('ExitValueController', ['employeeCompensation', 'companyValue', 'fundingRounds', 'exitParameters',
+	function($empComp, $compVal, $fundingRounds, $exitParameters) {
 	this.$empComp = $empComp;
 	this.$compVal = $compVal;
 
@@ -69,6 +75,10 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  
 			return $compVal.totalSharesIssued * initialSharePrice;
 		}
 	};
+
+	this.employeeSharesOwnable = function() {
+		return $empComp.sharesOwnable * ($exitParameters.vested / 100);
+	}
 
 	this.getYourValue = function() {
 	
@@ -123,11 +133,11 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  
 
 		var commonStock = calculateAmountToCommon();
 
-		return 1.0 * $empComp.sharesOwnable / commonStock.commonPool * commonStock.commonAmount;
+		return 1.0 * oldThis.employeeSharesOwnable() / commonStock.commonPool * commonStock.commonAmount;
 	};
 
 	this.getYourPrice = function() {
-		return $empComp.sharesOwnable * $empComp.strikePricePerShare;
+		return oldThis.employeeSharesOwnable() * $empComp.strikePricePerShare;
 	};
 
 	this.getYourNet = function() {
@@ -135,7 +145,7 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue',  
 	};
 
 	this.getYourOwnership = function() {
-		return 100.0 * $empComp.sharesOwnable / oldThis.issuedShares();
+		return 100.0 * oldThis.employeeSharesOwnable() / oldThis.issuedShares();
 	}
 
 	this.getInitialOwnership = function() {
@@ -162,8 +172,9 @@ app.controller('CompensationController', ['employeeCompensation', 'companyValue'
 	this.$compVal = $compVal;
 }]);
 
-app.controller('ExitController', ['companyValue',  function($compVal) {
+app.controller('ExitController', ['companyValue', 'exitParameters', function($compVal, $exitParams) {
 	this.$compVal = $compVal;
+	this.$exitParams = $exitParams;
 }]);
 
 app.directive('format', ['$filter', function ($filter) {

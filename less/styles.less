@@ -46,7 +46,7 @@ h4 {
 
 fieldset {
 	border: 0;
-	padding: 0;
+	padding: 0 0 15px 0;
 	margin: 0;
 }
 
@@ -59,7 +59,6 @@ body {
 }
 
 header {
-
 	.formElement();
 	background-image: url(../images/money.jpg);
 	background-repeat: no-repeat;
@@ -157,7 +156,6 @@ section {
 
 		fieldset.preferences {
 			clear: both;
-			padding: 15px 0;
 			#preference_options {
 				display: inline-block;
 			}
@@ -193,6 +191,13 @@ section {
 		.withBackgroundImage(url(../images/celebration.png));
 		background-color: @color4;
 		color: @lightestTextColor;
+
+		input[type="number"].months {
+			width: 48px;
+		}
+		input[type="text"].percent {
+			width: 48px;
+		}
 	}
 }
 
