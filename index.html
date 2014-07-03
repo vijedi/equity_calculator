@@ -4,7 +4,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.js"></script>
     <script src="js/app.js"></script>
 
-    <link href='http://fonts.googleapis.com/css?family=Lato:300|Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,700|Montserrat:400,700' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet/less" type="text/css" href="less/styles.less" >
     <script>
@@ -22,7 +22,7 @@
 <body>
 
 <header ng-controller="ExitValueController as equity">
-    <h1>How much is that {{ equity.getYourOwnership() | number }}% really worth?</h1>
+    <h1>Just how much is that {{ equity.getYourOwnership() | number }}% really worth?</h1>
     <p>Early stage compensation often involves giving a portion of the salary in order to 
         strike a claim on the riches that could come from a successful exit. It's impossible to predict
         exactly how a company will grow and what that could mean for your bottom line, but this calculator lets
@@ -84,8 +84,8 @@
                         <div>
                             <label for="preference"><input id="preference" type="checkbox" ng-model="round.preference"> Preferences?</label>
                             <div id="preference_options">
-                                <label for="preference_amount"> at &nbsp;</label> <input id="preference_amount" type="text" ng-model="round.preferenceAmount">x
-                                <label for="participating"><input id="participating" type="checkbox" ng-model="round.participating"> Participating?</label>
+                                <label for="preference_amount" class="smaller"> at &nbsp;</label> <input id="preference_amount" type="text" ng-model="round.preferenceAmount">x
+                                <label for="participating"  class="smaller"><input id="participating" type="checkbox" ng-model="round.participating"> Participating?</label>
                                 <select ng-model="round.participationStyle" ng-init="round.participationStyle = 'bestOf'">
                                     <option value="bestOf" >Best of participation or preference</option>
                                     <option value="both">Has preference and participates</option>
@@ -117,10 +117,10 @@
         <fieldset>
             <label>How long did it take?</label>
             <div>
-                <input class="months" type="number" ng-model="ec.$exitParams.months" > <label>months</label>
+                <input class="months" type="number" ng-model="ec.$exitParams.months" >&nbsp;<label class="smaller">months</label>
 
-                <label>and you vested</label> 
-                <input class="percent" type="text" ng-model="ec.$exitParams.vested"><label>% of your shares.</label>
+                <label class="smaller">and you vested</label>&nbsp;
+                <input class="percent" type="text" ng-model="ec.$exitParams.vested"><label class="smaller">% of your shares.</label>
             </div>
         </fieldset>
     </form>
@@ -138,13 +138,13 @@
             <label>Rate of return</label>
             <div>
                 <input type="text" class="interestRate" ng-model="bc.$bigCo.interestRate" placeholder="Rate of return on difference">
-                <label>% return on salary difference</label>
+                <label class="smaller">% return on salary difference</label>
             </div>
         </fieldset>
     </form>
 </section>
 <section id="exitValue" ng-controller="ExitValueController as equity">
-    <h2>The Totals</h2>
+    <h2>Your Totals</h2>
     <h3>Company Value
         <div>${{ equity.getCompanyValue() | number }}</div>
     </h3>
@@ -154,20 +154,20 @@
     <h3>Ownership - Final (Initial)
         <div>{{ equity.getYourOwnership() | number:3 }}% ({{ equity.getInitialOwnership() | number:3 }}%)</div>
     </h3>
-    <h1>Your Net
-        <div>${{ equity.getYourNet() | number:2}}</div>
-    </h1>
+    <h1>Net = ${{ equity.getYourNet() | number:2}} </h1>
     
     <div class="hr"></div>
-    <h4>Total Big Co Earnings
-        <div>${{ equity.totalBigCoEarnings() | number:2 }}</div>
-    </h4>
 
-    <h4>Total Startup Earnings
-        <div>${{ equity.totalStartupEarnings() | number:2 }}</div>
-    </h4>
-
-
+    <div class="earningsComparison">
+        <h3>Earnings Comparison</h3>
+        <h4>Total Big Co Earnings
+            <div>${{ equity.totalBigCoEarnings() | number:2 }}</div>
+        </h4>
+        <div style="padding: 15px 0">vs.</div>
+        <h4>Total Startup Earnings
+            <div>${{ equity.totalStartupEarnings() | number:2 }}</div>
+        </h4>
+    </div>
 </section>
 
 <section id="legalStuff">

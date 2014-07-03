@@ -1,8 +1,8 @@
 @color1: #17B225;
 @color2: #73FF7F;
 @color3: #139BFF;
-@color4: #B404CC;
-@color5: #e39942;
+@color4: #6c04cc;
+@color5: #6b3b08;
 
 @headerColor: @color1;
 @lightestTextColor: white;
@@ -55,7 +55,7 @@ body {
 	background-color: #222;
 	padding: 0; 
 	margin: 0;
-	font-family: ;
+	font-family: 'Lato', sans-serif;;
 	font-size: 16px;
 }
 
@@ -78,6 +78,7 @@ header {
 		line-height: 1.3em;
 		font-weight: normal;
 		text-align: left;
+		font-family: 'Lato', sans-serif;
 
 	}
 }
@@ -86,6 +87,10 @@ label {
 	font-size: 20px;
 	font-weight: 300;
 	font-family: 'Lato', sans-serif;
+
+	&.smaller {
+		font-size: 15px;
+	}
 }
 
 input[type='text'],input[type='number'] {
@@ -135,16 +140,24 @@ section {
 
 		form[name="fundingForm"] {
 			padding-top: 40px;
+
+			h2 {
+				padding-bottom: .1em;
+			}
+
+			& > p {
+				font-style: italic;
+			}
 		}
 
 		button {
 			font-size: 20px;
-			background-color: #494D99;
+			background-color: #0868af;
 			font-family: 'Montserrat', sans-serif;
 			font-weight: normal;
 			padding: 10px 15px;
 			border-radius: 16px;
-			border: 1px solid #494D99;
+			border: 3px solid #0c7fd5;
 			color: @lightestTextColor;
 		}
 
@@ -231,10 +244,13 @@ section {
 	padding: 25px;
 	position: fixed;
 	width: 250px;
-	right: 25px;
+	right: 0px;
 	top: 70px;
 	color: @lightestTextColor;
 	font-size: 13px;
+	border-left: 5px solid @lightestTextColor;
+	border-top: 5px solid @lightestTextColor;
+	border-bottom: 5px solid @lightestTextColor;
 	h1, h3 {
 		font-family: 'Lato', sans-serif;
 		font-weight: 300;
@@ -242,6 +258,33 @@ section {
 			font-family: 'Montserrat', sans-serif;
 			font-size: 1.1em;
 			font-weight: normal;
+		}
+	}
+
+	h1 {
+		font-weight: 700;
+	}
+	h2 {
+		border-bottom: 1px dotted @lightestTextColor;
+	}
+
+	div.hr {
+		background-color: @lightestTextColor;
+		height: 3px;
+		width: 300px;
+		position: relative;
+		left: -25px;
+		margin: 15px 0;
+	}
+
+	.earningsComparison {
+		h3 {
+			border-bottom: 1px dotted @lightestTextColor;
+			margin-bottom: 15px;
+		}
+
+		h4 {
+			font-weight: 400;
 		}
 	}
 	
