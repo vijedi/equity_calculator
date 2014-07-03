@@ -158,18 +158,18 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue', '
 		return 100.0 * $empComp.sharesOwnable / $compVal.sharesIssued;
 	};
 
-	this.bigCoInterest = function() {
+	this.bigCoExtraSalary = function() {
 		var monthlyRateOfReturn = $bigCoComp.interestRate / (12 * 100);
 		var diffPerMonth = ($bigCoComp.salary - $empComp.salary)/12;
-		var amountCompounded = 0;
-		for(var i = 1; i < $exitParameters.months; i++) {
-			amountCompounded += diffPerMonth + amountCompounded * monthlyRateOfReturn;
+		var amountExtra = 0;
+		for(var i = 0; i < $exitParameters.months; i++) {
+			amountExtra += diffPerMonth + amountExtra * monthlyRateOfReturn;
 		}
-		return amountCompounded;
+		return amountExtra;
 	};
 
 	this.totalBigCoEarnings = function() {
-		return oldThis.bigCoInterest() + ($exitParameters.months / 12) * $bigCoComp.salary;
+		return oldThis.bigExtraSalary() + ($exitParameters.months / 12) * $empComp.salary;
 	};
 
 	this.totalStartupEarnings = function() {
