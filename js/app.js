@@ -169,7 +169,7 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue', '
 	};
 
 	this.totalBigCoEarnings = function() {
-		return oldThis.bigExtraSalary() + ($exitParameters.months / 12) * $empComp.salary;
+		return oldThis.bigCoExtraSalary() + ($exitParameters.months / 12) * $empComp.salary;
 	};
 
 	this.totalStartupEarnings = function() {
