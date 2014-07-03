@@ -1,0 +1,291 @@
+@color1: #17B225;
+@color2: #73FF7F;
+@color3: #139BFF;
+@color4: #6c04cc;
+@color5: #6b3b08;
+
+@headerColor: @color1;
+@lightestTextColor: white;
+@darkTextColor: #222;
+
+.formElement() {
+	padding: 30px 325px 30px 172px;
+}
+
+.separatorShadow() {
+	box-shadow: 0px -3px 12px 0px rgba(50, 50, 50, 0.64);
+}
+
+.headerFont(@size) {
+	font-size: @size;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: normal;
+	padding: .5em 0;
+	margin: 0;
+}
+
+.horizontalFieldSet() {
+	float: left;
+	margin-right: 40px;
+}
+
+h1 {
+	.headerFont(3em);
+}
+
+h2 {
+	.headerFont(2em);
+}
+
+h3 {
+	.headerFont(1.5em);
+}
+
+h4 {
+	.headerFont(1em);
+}
+
+fieldset {
+	border: 0;
+	padding: 0 0 15px 0;
+	margin: 0;
+}
+
+body {
+	background-color: #222;
+	padding: 0; 
+	margin: 0;
+	font-family: 'Lato', sans-serif;;
+	font-size: 16px;
+}
+
+header {
+	.formElement();
+	background-image: url(../images/money.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	color: @darkTextColor;
+	text-align: center;
+	padding-top: 70px;
+	padding-bottom: 70px;
+	h1 {
+		font-size: 50px;
+	}
+
+	p {
+		font-size: 19px;
+		line-height: 1.3em;
+		font-weight: normal;
+		text-align: left;
+		font-family: 'Lato', sans-serif;
+
+	}
+}
+
+label {
+	font-size: 20px;
+	font-weight: 300;
+	font-family: 'Lato', sans-serif;
+
+	&.smaller {
+		font-size: 15px;
+	}
+}
+
+input[type='text'],input[type='number'] {
+	color: @darkTextColor;
+	font-size: 18px;
+	padding: 6px;
+	border-radius: 8px;
+	border: 1px solid lighten(@darkTextColor, 40%);
+	width: 300px;
+}
+
+select {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	padding: 6px;
+}
+
+section {
+	clear: both;
+	h1 {
+		.headerFont(2em);
+	}
+
+	.withBackgroundImage(@image) {
+		background-image: @image;
+		background-repeat: no-repeat;
+		background-position: 16px 48px;
+	}
+
+	&#compensation {
+		.formElement();
+		.withBackgroundImage(url(../images/handshake.png));
+		background-color: @color1;
+		color: @lightestTextColor;
+
+		fieldset {
+			.horizontalFieldSet();
+		}
+	}
+
+	&#company {
+		.formElement();
+		.separatorShadow();
+		.withBackgroundImage(url(../images/buildings.png));
+		background-color: @color3;
+		color: @lightestTextColor;
+
+		form[name="fundingForm"] {
+			padding-top: 40px;
+
+			h2 {
+				padding-bottom: .1em;
+			}
+
+			& > p {
+				font-style: italic;
+			}
+		}
+
+		button {
+			font-size: 20px;
+			background-color: #0868af;
+			font-family: 'Montserrat', sans-serif;
+			font-weight: normal;
+			padding: 10px 15px;
+			border-radius: 16px;
+			border: 3px solid #0c7fd5;
+			color: @lightestTextColor;
+		}
+
+		fieldset.amount {
+			.horizontalFieldSet();
+		}
+		fieldset.premoney {
+			.horizontalFieldSet();
+		}
+
+		fieldset.preferences {
+			clear: both;
+			#preference_options {
+				display: inline-block;
+			}
+
+			input#preference_amount {
+				width: 20px;
+			}
+
+			label[for='preference'] {
+				margin-right: 30px;
+			}
+
+			label[for='participating'] {
+				margin-left: 30px;
+			}
+		}
+
+		.fundingRound {
+			border-top: 1px solid lighten(@color3, 20%);
+			border-bottom: 1px solid lighten(@color3, 15%);
+			padding: 20px 0;
+		}
+
+		.buttons {
+			clear: both;
+			padding-top: 15px;
+		}
+	}
+
+	&#exit {
+		.formElement();
+		.separatorShadow();
+		.withBackgroundImage(url(../images/celebration.png));
+		background-color: @color4;
+		color: @lightestTextColor;
+
+		input[type="number"].months {
+			width: 48px;
+		}
+		input[type="text"].percent {
+			width: 48px;
+		}
+	}
+
+	&#bigCo {
+		.formElement();
+		.separatorShadow;
+		.withBackgroundImage(url(../images/man_in_chair.png));
+		background-color: @color5;
+		color: @lightestTextColor;
+
+		input[type='text'].interestRate {
+			width: 48px;
+		}
+	}
+}
+
+#legalStuff {
+	font-size: 13px;
+	padding: 20px 172px 20px 20px;
+	color: @lightestTextColor;
+
+	a, a:visited {
+		color: white;
+	}
+}
+
+
+#exitValue {
+	background: #393b44;
+	box-shadow: 3px 5px 17px 0px rgba(50, 50, 50, 0.6);
+	padding: 25px;
+	position: fixed;
+	width: 250px;
+	right: 0px;
+	top: 70px;
+	color: @lightestTextColor;
+	font-size: 13px;
+	border-left: 5px solid @lightestTextColor;
+	border-top: 5px solid @lightestTextColor;
+	border-bottom: 5px solid @lightestTextColor;
+	h1, h3 {
+		font-family: 'Lato', sans-serif;
+		font-weight: 300;
+		div {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 1.1em;
+			font-weight: normal;
+		}
+	}
+
+	h1 {
+		font-weight: 700;
+	}
+	h2 {
+		border-bottom: 1px dotted @lightestTextColor;
+	}
+
+	div.hr {
+		background-color: @lightestTextColor;
+		height: 3px;
+		width: 300px;
+		position: relative;
+		left: -25px;
+		margin: 15px 0;
+	}
+
+	.earningsComparison {
+		h3 {
+			border-bottom: 1px dotted @lightestTextColor;
+			margin-bottom: 15px;
+		}
+
+		h4 {
+			font-weight: 400;
+		}
+	}
+	
+}
