@@ -24,7 +24,10 @@ function FundingRound(fundingRounds, companyValue) {
 		return this.valuation / this.preMoneyShares();
 	};
 	this.sharesIssued = function() {
-		return this.amount / this.pricePerShare(); 
+		if(this.pricePerShare() > 0) {
+			return this.amount / this.pricePerShare(); 
+		}
+		return 0;
 	};
 };
 
@@ -76,7 +79,11 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue', '
 			return $compVal.exitAmount;
 		} else if(0 < $fundingRounds.length) {
 			var lastRound = $fundingRounds.slice(-1)[0];
-			return parseInt(lastRound.valuation) + parseInt(lastRound.amount);
+			if(lastRound.amount == '' || lastRound.valuation == '') {
+				return $compVal.totalSharesIssued * initialSharePrice;
+			} else {
+				return parseInt(lastRound.valuation) + parseInt(lastRound.amount);
+			}
 		} else {
 			return $compVal.totalSharesIssued * initialSharePrice;
 		}
@@ -138,7 +145,6 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue', '
 		};
 
 		var commonStock = calculateAmountToCommon();
-
 		return 1.0 * oldThis.employeeSharesOwnable() / commonStock.commonPool * commonStock.commonAmount;
 	};
 
